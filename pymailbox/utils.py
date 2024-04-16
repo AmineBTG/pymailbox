@@ -1,7 +1,7 @@
 import email.message
 import logging
 
-from models import EmailAttachment
+from .models import EmailAttachment
 
 
 def get_logger(name: str) -> logging.Logger:
