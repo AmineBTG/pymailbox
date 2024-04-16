@@ -8,7 +8,7 @@ Email bodies, headers and attached files can then be accessed very easily.
 
 ## Installation
 ```
-pip install git+https://github.com/AmineBTG/pymailbox
+pip install -e git+https://github.com/AmineBTG/pymailbox
 ``` 
 
 ## Supported and tested Email Services

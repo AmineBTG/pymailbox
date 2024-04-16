@@ -2,9 +2,9 @@ import email
 from abc import ABC, abstractmethod
 from imaplib import IMAP4_SSL
 
-from exceptions import EmailNotFound, NoSearchResultsFound
-from search import Email, EmailSearchCriteria
-from utils import get_email_attachments, get_email_body, get_logger
+from .exceptions import EmailNotFound, NoSearchResultsFound
+from .search import Email, EmailSearchCriteria
+from .utils import get_email_attachments, get_email_body, get_logger
 
 logger = get_logger(__name__)
 
