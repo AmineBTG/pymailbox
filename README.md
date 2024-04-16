@@ -15,8 +15,8 @@ pip install git+https://github.com/AmineBTG/pymailbox
 The follwoing emails services are supported and have been tested :
 -   Gmail
 -   Outlook
-Other services could work fine using 'OutlookEmailService' however this is not garanteed.
 
+Other services could work fine using 'OutlookEmailService' however this is not garanteed.
 
 ## Quistart
 ```python
