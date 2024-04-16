@@ -24,13 +24,13 @@ class EmailSearchCriteria:
             imap_format.append("SEEN")
 
         if self.sender:
-            imap_format.extend(["FROM", self.sender])
+            imap_format.extend(["FROM", f'"{self.sender}"'])
 
         if self.subject:
-            imap_format.extend(["SUBJECT", self.subject])
+            imap_format.extend(["SUBJECT", f'"{self.subject}"'])
 
         if self.body:
-            imap_format.extend(["BODY", self.body])
+            imap_format.extend(["BODY", f'"{self.body}"'])
 
         if self.sent_on:
             imap_format.extend(["SENTON", self.sent_on])
