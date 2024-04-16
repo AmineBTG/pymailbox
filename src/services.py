@@ -93,7 +93,19 @@ class EmailService(ABC):
         logger.info(self.connection.uid("STORE", uid, "+FLAGS", "\\Deleted"))
 
     @abstractmethod
-    def search_email(self, critera: EmailSearchCriteria) -> Email: ...
+    def search_email(self, critera: EmailSearchCriteria) -> Email:
+        """Search for email with the Inbox following the passed Criteria.
+
+        Args:
+            critera (EmailSearchCriteria): Email Search Criteria. ex; EmailSearchCriteria(unseen=True, sender="Amine", senton="07-DEC-2023")
+
+        Raises:
+            NoSearchResultsFound: if no email found with passed criteria
+
+        Returns:
+            Email: Email object. If multiple emails found with passed criteria, the oldest email will be returned.
+        """
+        ...
 
 
 class GmailEmailService(EmailService):
