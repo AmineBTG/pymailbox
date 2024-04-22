@@ -36,9 +36,9 @@ class EmailSearchCriteria:
             imap_format.extend(["SENTON", self.sent_on])
 
         if self.sent_since:
-            imap_format.extend(["SENTSINCE", self.sent_on])
+            imap_format.extend(["SENTSINCE", self.sent_since])
 
         if self.sent_before:
-            imap_format.extend(["SENTBEFORE", self.sent_on])
+            imap_format.extend(["SENTBEFORE", self.sent_before])
 
         return tuple(imap_format)
