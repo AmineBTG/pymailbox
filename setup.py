@@ -15,12 +15,12 @@ setup(
     author_email='boutaghouamine@gmail.com',
 
     # Define the version of this library.
-    # Read this as
+    # Read this as example: 0.1.5
     #   - MAJOR VERSION 0
     #   - MINOR VERSION 1
     #   - MAINTENANCE VERSION 5
     #   - Adding Check Spam methods
-    version='1.0.0',
+    version='1.1.0',
 
     # Here is a small description of the library. This appears
     # when someone searches for the library on https://pypi.org/search.
