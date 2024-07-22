@@ -47,7 +47,6 @@ def get_email_attachments(message: email.message.Message) -> list[EmailAttachmen
     attachments: list[EmailAttachment] = []
 
     for part in message.walk():
-
         if part.get_content_maintype() == "multipart":
             continue
         if part.get("Content-Disposition") is None:
