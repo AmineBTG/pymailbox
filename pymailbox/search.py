@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 @dataclass
 class EmailSearchCriteria:
+    """ X-GM-RAW is specific to Gmail (https://developers.google.com/gmail/imap/imap-extensions#extension_of_the_search_command_x-gm-raw)"""
     unseen: bool | None = None
     sender: str | None = None
     subject: str | None = None
@@ -9,6 +10,7 @@ class EmailSearchCriteria:
     sent_on: str | None = None
     sent_since: str | None = None
     sent_before: str | None = None
+    x_gm_raw: str | None = None
 
     def as_imap_format(self) -> tuple[str]:
 
@@ -40,5 +42,8 @@ class EmailSearchCriteria:
 
         if self.sent_before:
             imap_format.extend(["SENTBEFORE", self.sent_before])
+
+        if self.x_gm_raw:
+            imap_format.extend(["X-GM-RAW", self.x_gm_raw])
 
         return tuple(imap_format)
