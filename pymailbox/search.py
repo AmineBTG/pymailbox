@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class EmailSearchCriteria:
-    """ X-GM-RAW is specific to Gmail (https://developers.google.com/gmail/imap/imap-extensions#extension_of_the_search_command_x-gm-raw)"""
+    """X-GM-RAW is specific to Gmail (https://developers.google.com/gmail/imap/imap-extensions#extension_of_the_search_command_x-gm-raw)"""
+
     unseen: bool | None = None
     sender: str | None = None
     subject: str | None = None
@@ -13,7 +15,6 @@ class EmailSearchCriteria:
     x_gm_raw: str | None = None
 
     def as_imap_format(self) -> tuple[str]:
-
         imap_format = []
 
         if self.unseen is None:
@@ -22,7 +23,7 @@ class EmailSearchCriteria:
         elif self.unseen:
             imap_format.append("UNSEEN")
 
-        elif self.unseen == False:
+        elif self.unseen == False:  # noqa: E712
             imap_format.append("SEEN")
 
         if self.sender:
