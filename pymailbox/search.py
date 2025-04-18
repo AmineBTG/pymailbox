@@ -45,6 +45,6 @@ class EmailSearchCriteria:
             imap_format.extend(["SENTBEFORE", self.sent_before])
 
         if self.x_gm_raw:
-            imap_format.extend(["X-GM-RAW", self.x_gm_raw])
+            imap_format.extend(["X-GM-RAW", f'"{self.x_gm_raw}"'])
 
         return tuple(imap_format)
