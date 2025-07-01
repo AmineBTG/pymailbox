@@ -1,11 +1,11 @@
 import email.message
 import logging
+from email.header import decode_header
 
 from .models import EmailAttachment
 
 
 def get_logger(name: str) -> logging.Logger:
-
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
 
@@ -35,6 +35,14 @@ def get_email_body(message: email.message.Message) -> str:
     return None
 
 
+def decode_filename(encoded_name: str) -> str:
+    """Decode MIME-encoded attachment filenames."""
+    if not encoded_name:
+        return ""
+    decoded_parts = decode_header(encoded_name)
+    return "".join(part.decode(charset or "utf-8") if isinstance(part, bytes) else part for part, charset in decoded_parts)
+
+
 def get_email_attachments(message: email.message.Message) -> list[EmailAttachment]:
     """Return a list EmailAttachment
 
@@ -52,12 +60,13 @@ def get_email_attachments(message: email.message.Message) -> list[EmailAttachmen
         if part.get("Content-Disposition") is None:
             continue
 
-        fileName = part.get_filename()
+        raw_filename = part.get_filename()
+        file_name = decode_filename(raw_filename)
         blob = part.get_payload(decode=True)
 
         attachments.append(
             EmailAttachment(
-                name=fileName,
+                name=file_name,
                 blob=blob,
             )
         )
