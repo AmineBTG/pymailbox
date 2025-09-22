@@ -6,6 +6,7 @@ class EmailSearchCriteria:
     """X-GM-RAW is specific to Gmail (https://developers.google.com/gmail/imap/imap-extensions#extension_of_the_search_command_x-gm-raw)"""
 
     unseen: bool | None = None
+    to: str | None = None
     sender: str | None = None
     subject: str | None = None
     body: str | None = None
@@ -28,6 +29,9 @@ class EmailSearchCriteria:
 
         if self.sender:
             imap_format.extend(["FROM", f'"{self.sender}"'])
+
+        if self.to:
+            imap_format.extend(["TO", f'"{self.to}"'])
 
         if self.subject:
             imap_format.extend(["SUBJECT", f'"{self.subject}"'])
