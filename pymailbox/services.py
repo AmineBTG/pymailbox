@@ -45,7 +45,7 @@ class EmailService(ABC):
     def __exit__(self, exit_type, value, traceback):
         self.connection.close()
 
-    def get_email_by_uid(self, uid: str) -> Email:
+    def get_email_by_uid(self, uid: str, folder: str = "INBOX") -> Email:
         """
         Fetching from Inbox, email by its UID following (RFC822) standar.
 
@@ -57,7 +57,7 @@ class EmailService(ABC):
         Returns and Email object.
         """
 
-        self.connection.select("INBOX")
+        self.connection.select(folder)
         _, data = self.connection.uid("FETCH", uid, "(RFC822)")
 
         if not data:
@@ -110,7 +110,6 @@ class EmailService(ABC):
 
 
 class GmailEmailService(EmailService):
-
     def search_email(self, critera: EmailSearchCriteria) -> Email:
         """Search for email with the Inbox following the passed Criteria.
 
@@ -124,7 +123,7 @@ class GmailEmailService(EmailService):
             Email: Email object. If multiple emails found with passed criteria, the oldest email will be returned.
         """
 
-        self.connection.select("INBOX")
+        self.connection.select(critera.folder)
         _, search_results = self.connection.uid("SEARCH", "CHARSET", "UTF-8", *critera.as_imap_format())
 
         if not search_results or search_results == [b""]:
@@ -136,13 +135,12 @@ class GmailEmailService(EmailService):
             logger.warning(f"IMPORTANT: Multiple emails ({len(search_results)}) found with following critera: {critera.as_imap_format()} !")
             logger.warning(f"Emails found: {search_results}. Returned email UID (FIFO): {search_results[0]}.")
 
-        email = self.get_email_by_uid(search_results[0])
+        email = self.get_email_by_uid(search_results[0], critera.folder)
 
         return email
 
 
 class OutlookEmailService(EmailService):
-
     def search_email(self, critera: EmailSearchCriteria) -> Email:
         """Search for email with the Inbox following the passed Criteria.
 
@@ -156,7 +154,7 @@ class OutlookEmailService(EmailService):
             Email: Email object. If multiple emails found with passed criteria, the oldest email will be returned.
         """
 
-        self.connection.select("INBOX")
+        self.connection.select(critera.folder)
         _, search_results = self.connection.uid("SEARCH", *critera.as_imap_format())
 
         if not search_results or search_results == [b""]:
@@ -168,6 +166,6 @@ class OutlookEmailService(EmailService):
             logger.warning(f"IMPORTANT: Multiple emails ({len(search_results)}) found with following criteria: {critera.as_imap_format()} !")
             logger.warning(f"Emails found: {search_results}. Returned email UID (FIFO): {search_results[0]}.")
 
-        email = self.get_email_by_uid(search_results[0])
+        email = self.get_email_by_uid(search_results[0], critera.folder)
 
         return email

@@ -14,6 +14,7 @@ class EmailSearchCriteria:
     sent_since: str | None = None
     sent_before: str | None = None
     x_gm_raw: str | None = None
+    folder: str = "INBOX"
 
     def as_imap_format(self) -> tuple[str]:
         imap_format = []
